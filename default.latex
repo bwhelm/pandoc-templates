@@ -290,7 +290,8 @@ $else$
 $endif$
 $endif$
 $if(graphics)$
-\usepackage{graphicx,grffile,caption} % I'm adding caption package....
+\usepackage{graphicx}
+\usepackage{grffile,caption} % My additions
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -378,18 +379,17 @@ $endif$
 % END my addition
 $if(beamer)$
 $else$
-% My Addition: Don't redefine (sub)paragraphs
-% $if(block-headings)$
-% % Make \paragraph and \subparagraph free-standing
-% \ifx\paragraph\undefined\else
-%   \let\oldparagraph\paragraph
-%   \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-% \fi
-% \ifx\subparagraph\undefined\else
-%   \let\oldsubparagraph\subparagraph
-%   \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-% \fi
-% $endif$
+$if(block-headings)$
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+$endif$
 $endif$
 $if(pagestyle)$
 \pagestyle{$pagestyle$}
@@ -448,6 +448,7 @@ indexing=cite,%
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
+$endif$
 $if(book)$
 $if(biblatex)$
 \renewbibmacro*{citeindex}{%
@@ -476,7 +477,6 @@ $endif$
 $endif$
 $if(citeinline)$ % My addition to make syllabi work properly
 \renewcommand{\textcite}{\fullcite}
-$endif$
 $endif$
 $if(csl-refs)$
 \newlength{\cslhangindent}
@@ -582,7 +582,6 @@ $endif$
 $if(book)$ % My addition for greater flexibility
 \mainmatter
 $endif$
-
 $body$
 
 $if(book)$ % My addition for greater flexibility
