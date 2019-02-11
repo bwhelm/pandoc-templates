@@ -532,7 +532,7 @@ $endif$
 
 $endif$
 
-$if(book)$ % My addition for greater flexibility
+$if(index)$ % My addition for greater flexibility
 \cleardoublepage
 \printindex
 $endif$
