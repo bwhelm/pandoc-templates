@@ -565,7 +565,8 @@ $endif$
 $endif$
 $endif$
 $if(biblatex)$
-$if(printbibliography)$ % My addition for greater flexibility
+$if(bibliography)$ % My addition for greater flexibility
+$if(printbibliography)$
 $if(beamer)$
 \begin{frame}[allowframebreaks]{$biblio-title$}
   \bibliographytrue
@@ -573,10 +574,11 @@ $if(beamer)$
 \end{frame}
 $else$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-$endif$
-$endif$
+$endif$ % if beamer
+$endif$ % if printbibliography
+$endif$ % if bibliography
 
-$endif$
+$endif$ % if biblatex
 
 $if(index)$ % My addition for greater flexibility
 \cleardoublepage
