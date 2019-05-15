@@ -302,6 +302,25 @@ $endif$$else$$if(draftfooter)$\usepackage[]{prelim2e}%
 \renewcommand{\PrelimWords}%
             {\hfill\textbf{Draft:} Do not cite or circulate without permission!}
 $endif$$endif$
+
+% Rename autorefs (from hyperref package)
+\renewcommand{\sectionautorefname}{§}
+\renewcommand{\figureautorefname}{Figure}
+\renewcommand{\tableautorefname}{Table}
+\renewcommand{\partautorefname}{Part}
+\renewcommand{\appendixautorefname}{Appendix}
+\renewcommand{\equationautorefname}{Equation}
+\renewcommand{\Itemautorefname}{item}
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{§}
+\renewcommand{\subsectionautorefname}{§}
+\renewcommand{\subsubsectionautorefname}{§}
+\renewcommand{\paragraphautorefname}{Para.}
+\renewcommand{\Hfootnoteautorefname}{note}
+% \renewcommand{\AMSname}{Equation}
+% \renewcommand{\theoremname}{Theorem}
+% \renewcommand{\page}{p.}
+
 \usepackage{cleveref}
 \crefname{chapter}{Chapter}{Chapters}
 % \crefname{section}{§}{§§}
