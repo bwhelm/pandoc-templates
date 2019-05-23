@@ -295,10 +295,10 @@ $else$
 \setcounter{secnumdepth}{-2}
 $endif$
 % START: My additions for draft option and to use and customize cleveref and index
-$if(draft)$$if(draftfooter)$\usepackage[]{prelim2e}%
+$if(draft)$\usepackage[]{prelim2e}%
 \renewcommand{\PrelimWords}%
             {\hfill\textbf{Draft:} Do not cite or circulate without permission!}
-$endif$$else$$if(draftfooter)$\usepackage[]{prelim2e}%
+$else$$if(draftfooter)$\usepackage[]{prelim2e}%
 \renewcommand{\PrelimWords}%
             {\hfill\textbf{Draft:} Do not cite or circulate without permission!}
 $endif$$endif$
