@@ -303,6 +303,7 @@ $else$$if(draftfooter)$\usepackage[]{prelim2e}%
             {\hfill\textbf{Draft:} Do not cite or circulate without permission!}
 $endif$$endif$
 
+$if(beamer)$$else$
 % Rename autorefs (from hyperref package)
 \renewcommand{\sectionautorefname}{§}
 \renewcommand{\figureautorefname}{Figure}
@@ -320,6 +321,7 @@ $endif$$endif$
 % \renewcommand{\AMSname}{Equation}
 % \renewcommand{\theoremname}{Theorem}
 % \renewcommand{\page}{p.}
+$endif$
 
 \usepackage{cleveref}
 \crefname{chapter}{Chapter}{Chapters}
@@ -492,12 +494,6 @@ $endif$
 $endif$
 
 \begin{document}
-
-% Redefine \autoref names (from the hyperref package).
-%\renewcommand{\chapterautorefname}{Chapter}
-%\renewcommand{\sectionautorefname}{section}
-%\renewcommand{\subsectionautorefname}{section}
-%\renewcommand{\subsubsectionautorefname}{section}
 
 $if(book)$ % My addition for greater flexibility
 \frontmatter
