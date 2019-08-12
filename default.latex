@@ -1,4 +1,5 @@
-\PassOptionsToPackage{unicode=true$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 $if(colorlinks)$
 \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
@@ -49,7 +50,7 @@ $endif$
 $for(beameroption)$
 \setbeameroption{$beameroption$}
 $endfor$
-% Prevent slide breaks in the middle of a paragraph:
+% Prevent slide breaks in the middle of a paragraph
 \widowpenalties 1 10000
 \raggedbottom
 $if(section-titles)$
@@ -97,16 +98,15 @@ $endif$
 $endif$
 $if(linestretch)$
 \usepackage{setspace}
-\setstretch{$linestretch$}
 $endif$
 % \usepackage[libertine,bigdelims,vvarbb]{newtxmath}
 \usepackage{amssymb,amsmath} % DOES THIS NEED TO GO BEFORE fontfamily DECLARATION?
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
-  % \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
 $if(mathspec)$
   \ifxetex
     \usepackage{mathspec}
@@ -181,7 +181,7 @@ $if(outertheme)$
 \useoutertheme{$outertheme$}
 $endif$
 $endif$
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
   \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
@@ -217,6 +217,12 @@ $endif$
 $if(author-meta)$
   pdfauthor={$author-meta$},
 $endif$
+$if(lang)$
+  pdflang={$lang$},
+$endif$
+$if(subject)$
+  pdfsubject={$subject$},
+$endif$
 $if(keywords)$
   pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
 $endif$
@@ -227,15 +233,19 @@ $if(colorlinks)$
   citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
   urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
 $else$
-  pdfborder={0 0 0},
+  hidelinks,
 $endif$
-  breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 $if(verbatim-in-note)$
-\VerbatimFootnotes % allows verbatim text in footnotes
+\VerbatimFootnotes % allow verbatim text in footnotes
 $endif$
 $if(geometry)$
+$if(beamer)$
+\geometry{$for(geometry)$$geometry$$sep$,$endfor$}
+$else$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
 $endif$
 $if(beamer)$
 \newif\ifbibliography
@@ -256,11 +266,16 @@ $if(tables)$
 \usepackage{longtable,booktabs}
 $if(beamer)$
 \usepackage{caption}
-% These lines are needed to make table captions work with longtable:
+% Make caption package work with longtable
 \makeatletter
 \def\fnum@table{\tablename~\thetable}
 \makeatother
 $else$
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
@@ -276,6 +291,10 @@ $if(graphics)$
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
 $endif$
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
@@ -283,16 +302,16 @@ $if(links-as-notes)$
 $endif$
 $if(strikeout)$
 \usepackage[normalem]{ulem}
-% avoid problems with \sout in headers with hyperref:
+% Avoid problems with \sout in headers with hyperref
 \pdfstringdefDisableCommands{\renewcommand{\sout}{}}
 $endif$
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 $if(numbersections)$
 \setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$3$endif$}
 $else$
-\setcounter{secnumdepth}{-2}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 $endif$
 % START: My additions for draft option and to use and customize cleveref and index
 $if(draft)$\usepackage[]{prelim2e}%
@@ -348,9 +367,8 @@ $endif$
 $if(beamer)$
 $else$
 % My Addition: Don't redefine (sub)paragraphs
-% $if(subparagraph)$
-% $else$
-% % Redefines (sub)paragraphs to behave more like sections
+% $if(block-headings)$
+% % Make \paragraph and \subparagraph free-standing
 % \ifx\paragraph\undefined\else
 %   \let\oldparagraph\paragraph
 %   \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
@@ -374,24 +392,27 @@ $else$
 $endif$
 \makeatother
 
+$for(header-includes)$
+$header-includes$
+$endfor$
 $if(lang)$
-\ifnum 0\ifxetex 1\fi=0 % if pdftex or luatex
-  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
-$if(babel-newcommands)$
-  $babel-newcommands$
-$endif$
-\else % if xetex
-  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
+\ifxetex
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
   \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
 $for(polyglossia-otherlangs)$
   \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
 $endfor$
+\else
+  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$if(babel-newcommands)$
+  $babel-newcommands$
+$endif$
 \fi
 $endif$
 $if(dir)$
 \ifxetex
-  % load bidi as late as possible as it modifies e.g. graphicx
+  % Load bidi as late as possible as it modifies e.g. graphicx
   \usepackage{bidi}
 \fi
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
@@ -457,9 +478,6 @@ $if(citeinline)$ % My addition to make syllabi work properly
 \renewcommand{\textcite}{\fullcite}
 $endif$
 $endif$
-$for(header-includes)$
-$header-includes$
-$endfor$
 
 %%%%% DOES \begin{document} BELONG HERE?? %%%%%
 $if(title)$
@@ -548,6 +566,9 @@ $if(lof)$
 \endgroup
 \listoffigures
 $endif$
+$if(linestretch)$
+\setstretch{$linestretch$}
+$endif$
 $if(book)$ % My addition for greater flexibility
 \mainmatter
 $endif$
@@ -562,7 +583,7 @@ $endif$
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
-$if(book-class)$
+$if(has-chapters)$
 \renewcommand\bibname{$biblio-title$}
 $else$
 \renewcommand\refname{$biblio-title$}
