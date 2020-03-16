@@ -89,18 +89,24 @@ $endif$
 $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
 $endif$
+\usepackage{amssymb,amsmath} % DOES THIS NEED TO GO BEFORE fontfamily DECLARATION?
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $else$
-$if(beamer)$$else$ % My addition: Use standard font for beamer; otherwise use fbb (unless using lualatex or xelatex)
-$if(lualatex)$$else$$if(xelatex)$$else$\usepackage[oldstyle]{fbb}$endif$$endif$
+$if(beamer)$$else$ % My addition: Use standard font for beamer; otherwise use ETbb (unless using lualatex or xelatex)
+$if(lualatex)$$else$$if(xelatex)$$else$
+\usepackage[p,oldstyle]{ETbb}
+\usepackage[scaled=.95,type1]{cabin}
+\usepackage[varqu,varl]{zi4}
+\usepackage[libertine,vvarbb]{newtxmath}
+$endif$$endif$
+% $if(lualatex)$$else$$if(xelatex)$$else$\usepackage[oldstyle]{fbb}$endif$$endif$
 $endif$
 $endif$
 $if(linestretch)$
 \usepackage{setspace}
 $endif$
 % \usepackage[libertine,bigdelims,vvarbb]{newtxmath}
-\usepackage{amssymb,amsmath} % DOES THIS NEED TO GO BEFORE fontfamily DECLARATION?
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
