@@ -297,9 +297,13 @@ $if(graphics)$
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-% Set default figure placement to htbp
+% set default figure placement to htbp
 \makeatletter
+$if(figureplacement)$
+\def\fps@figure{$figureplacement$}
+$else$
 \def\fps@figure{htbp}
+$endif$
 \makeatother
 $endif$
 $if(links-as-notes)$
@@ -389,18 +393,6 @@ $if(pagestyle)$
 \pagestyle{$pagestyle$}
 $endif$
 
-% set default figure placement to htbp
-\makeatletter
-$if(figureplacement)$
-\def\fps@figure{$figureplacement$}
-$else$
-\def\fps@figure{htbp}
-$endif$
-\makeatother
-
-$for(header-includes)$
-$header-includes$
-$endfor$
 $if(lang)$
 \ifxetex
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
@@ -484,6 +476,10 @@ $if(citeinline)$ % My addition to make syllabi work properly
 \renewcommand{\textcite}{\fullcite}
 $endif$
 $endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 %%%%% DOES \begin{document} BELONG HERE?? %%%%%
 $if(title)$
