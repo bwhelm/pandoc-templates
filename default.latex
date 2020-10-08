@@ -336,10 +336,10 @@ $endif$
 \addtolength{\mydraftfooter}{\footskip}
 $if(draft)$
 \usepackage[]{draftwatermark}
-\DraftwatermarkOptions{angle=0,scale=1,fontsize=11pt,text={Draft (\today): Do not cite or circulate without permission!},vanchor=b,vpos=\mydraftfooter,colorspec=0}
+\DraftwatermarkOptions{angle=0,scale=1,fontsize=11pt,text=\scriptsize{Draft (\today): Do not cite or circulate without permission!},vanchor=t,vpos=\mydraftfooter,colorspec=0}
 $else$$if(draftfooter)$
 \usepackage[]{draftwatermark}
-\DraftwatermarkOptions{angle=0,scale=1,fontsize=11pt,text={Draft: Do not cite or circulate without permission!},vanchor=m,vpos=\mydraftfooter,colorspec=.5}
+\DraftwatermarkOptions{angle=0,scale=1,fontsize=11pt,text=\scriptsize{Draft (\today): Do not cite or circulate without permission!},vanchor=t,vpos=\mydraftfooter,colorspec=0}
 $endif$$endif$
 
 $if(beamer)$$else$
