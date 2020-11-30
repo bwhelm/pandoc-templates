@@ -326,20 +326,12 @@ $if(numbersections)$
 $else$
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 $endif$
+
 % START: My additions for draft option and to use and customize cleveref and index
-\newlength{\mydraftfooter}
-\setlength{\mydraftfooter}{\textheight}
-\addtolength{\mydraftfooter}{1in}
-\addtolength{\mydraftfooter}{\topmargin}
-\addtolength{\mydraftfooter}{2\headheight}
-\addtolength{\mydraftfooter}{\headsep}
-\addtolength{\mydraftfooter}{\footskip}
-$if(draft)$
-\usepackage[]{draftwatermark}
-\DraftwatermarkOptions{angle=0,scale=1,fontsize=11pt,text=\scriptsize{Draft: Do not cite or circulate without permission! --- \today},vanchor=t,vpos=\mydraftfooter,colorspec=0}
-$else$$if(draftfooter)$
-\usepackage[]{draftwatermark}
-\DraftwatermarkOptions{angle=0,scale=1,fontsize=11pt,text=\scriptsize{Draft: Do not cite or circulate without permission! --- \today},vanchor=t,vpos=\mydraftfooter,colorspec=0}
+$if(draft)$\usepackage[draft]{prelim2e}
+\renewcommand*{\PrelimWords}{Draft: Do not cite or circulate without permission!}
+$else$$if(draftfooter)$\usepackage[draft]{prelim2e}
+\renewcommand*{\PrelimWords}{Draft: Do not cite or circulate without permission!}
 $endif$$endif$
 
 $if(beamer)$$else$
