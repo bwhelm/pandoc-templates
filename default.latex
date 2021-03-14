@@ -109,14 +109,14 @@ $endif$
 $if(linestretch)$
 \usepackage{setspace}
 $endif$
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
 $if(mathspec)$
-  \ifxetex
+  \ifXeTeX
     \usepackage{mathspec}
   \else
     \usepackage{unicode-math}
@@ -142,7 +142,7 @@ $for(fontfamilies)$
 $endfor$
 $if(mathfont)$
 $if(mathspec)$
-  \ifxetex
+  \ifXeTeX
     \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
   \else
     \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
@@ -152,18 +152,18 @@ $else$
 $endif$
 $endif$
 $if(CJKmainfont)$
-  \ifxetex
+  \ifXeTeX
     \usepackage{xeCJK}
     \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
 $endif$
 $if(luatexjapresetoptions)$
-  \ifluatex
+  \ifLuaTeX
     \usepackage[$for(luatexjapresetoptions)$$luatexjapresetoptions$$sep$,$endfor$]{luatexja-preset}
   \fi
 $endif$
 $if(CJKmainfont)$
-  \ifluatex
+  \ifLuaTeX
     \usepackage[$for(luatexjafontspecoptions)$$luatexjafontspecoptions$$sep$,$endfor$]{luatexja-fontspec}
     \setmainjfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
@@ -236,10 +236,10 @@ $if(keywords)$
 $endif$
 $if(colorlinks)$
   colorlinks=true,
-  linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
-  filecolor=$if(filecolor)$$filecolor$$else$Maroon$endif$,
-  citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
-  urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+  linkcolor={$if(linkcolor)$$linkcolor$$else$Maroon$endif$},
+  filecolor={$if(filecolor)$$filecolor$$else$Maroon$endif$},
+  citecolor={$if(citecolor)$$citecolor$$else$Blue$endif$},
+  urlcolor={$if(urlcolor)$$urlcolor$$else$Blue$endif$},
 $else$
   hidelinks,
 $endif$
@@ -272,6 +272,9 @@ $highlighting-macros$
 $endif$
 $if(tables)$
 \usepackage{longtable,booktabs,array}
+$if(multirow)$
+\usepackage{multirow}
+$endif$
 \usepackage{calc} % for calculating minipage widths
 $if(beamer)$
 \usepackage{caption}
@@ -405,7 +408,7 @@ $header-includes$
 $endfor$
 
 $if(lang)$
-\ifxetex
+\ifXeTeX
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
   \setmainlanguage[$for(polyglossia-lang.options)$$polyglossia-lang.options$$sep$,$endfor$]{$polyglossia-lang.name$}
@@ -422,15 +425,15 @@ $if(babel-newcommands)$
 $endif$
 \fi
 $endif$
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 $if(dir)$
-\ifxetex
+\ifXeTeX
   % Load bidi as late as possible as it modifies e.g. graphicx
   \usepackage{bidi}
 \fi
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX
   \TeXXeTstate=1
   \newcommand{\RL}[1]{\beginR #1\endR}
   \newcommand{\LR}[1]{\beginL #1\endL}
